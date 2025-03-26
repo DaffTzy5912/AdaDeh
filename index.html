@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kejutan Gombal ❤️</title>
+    <style>
+    body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    position: relative;
+    max-width: 350px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+#typingText {
+    font-size: 24px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #ff5e78;
+    width: 0;
+    animation: typing 3s steps(30, end) forwards;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+button {
+    background: linear-gradient(90deg, #ff758c, #ff7eb3);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(255, 0, 128, 0.3);
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(255, 0, 128, 0.5);
+}
+
+#gombalText, #countdown {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+    display: none;
+}
+
+.heart {
+    position: absolute;
+    font-size: 40px;
+    opacity: 1;
+    animation: spin 1.5s ease-in-out, floatUp 2s ease-in-out 1.5s forwards;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-40px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="typingText"></h1>
+        <p class="subtitle">Tekan tombol di bawah untuk mendapatkan gombalan spesial buat kamu!</p>
+        <button id="gombalBtn">💌 Klik Aku 💌</button>
+        <div id="countdown" class="hidden"></div>
+        <div id="gombalText" class="hidden"></div>
+        <div class="hearts-container"></div>
+    </div>
+    <script>
+    const gombalList = [
+    "Kamu tau gak? Kenapa kalau aku menghafal lihatnya ke atas? soalnya kalau merem langsung kebayang wajahmu.",
+    "Orang kurus itu setia, makan aja tidak pernah nambah apalagi pasangan.",
+    "Kamu tu kayak warteg, sederhana namun berkualitas.",
+    "Aku gak sedih kok kalo besok hari senin, aku sedihnya kalau gak ketemu kamu.",
+    "Cintaku kepadamu itu bagaikan metabolisme, yang gak akan berhenti sampai mati.",
+    "Kamu tau gak apa persamaannya kamu sama AC? Sama-sama bikin aku sejuk.",
+    "Aku hanya ingin hidup cukup. Cukup lihat senyummu setiap hari.",
+    "Aku rela ikut lomba lari keliling dunia, asalkan engkau yang menjadi garis finisnya.",
+    "Kalau orang kebutuhan primernya ada tiga yaitu sandang pangan dan papan, tapi kalau aku : kamu, kamu, kamu.",
+];
+
+function pickRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const text = "Hai Sayang♥️";
+    const typingText = document.getElementById("typingText");
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            typingText.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, 150);
+        }
+    }
+    type();
+});
+
+document.getElementById("gombalBtn").addEventListener("click", function() {
+    const countdownEl = document.getElementById("countdown");
+    const gombalText = document.getElementById("gombalText");
+    const heartsContainer = document.querySelector(".hearts-container");
+
+    let countdown = 4;
+    countdownEl.textContent = countdown;
+    countdownEl.classList.remove("hidden");
+
+    let interval = setInterval(() => {
+        countdown--;
+        countdownEl.textContent = countdown;
+        if (countdown === 0) {
+            clearInterval(interval);
+            countdownEl.classList.add("hidden");
+
+            // Tampilan
+            gombalText.textContent = pickRandom(gombalList);
+            gombalText.classList.remove("hidden");
+
+            // posi
+            let positions = [
+                { top: "15%", left: "10%" },
+                { top: "15%", right: "10%" },
+                { bottom: "15%", left: "10%" },
+                { bottom: "15%", right: "10%" }
+            ];
+            
+            positions.forEach(pos => {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.textContent = "💖";
+                Object.assign(heart.style, pos);
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 2500);
+            });
+        }
+    }, 1000);
+});
+    </script>
+</body>
+</html>
